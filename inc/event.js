@@ -16,7 +16,11 @@ function changeDate(dateId, timeId, number, singular, plural) {
 }
 
 function updateDate(date) {
-	var seconds = Math.floor(((new Date()).getTime() - date.getTime()) / 1000);
+	var actual = (new Date()).getTime();
+	var seconds = Math.floor((actual - date.getTime()) / 1000);
+	if (actual < date.getTime()) {
+		seconds = Math.floor((date.getTime() - actual) / 1000);
+	}
 	const months = Math.abs(Math.floor(seconds / (60 * 60 * 24 * 30)));
 	seconds -= months * 60 * 60 * 24 * 30;
 	const days = Math.abs(Math.floor(seconds / (60 * 60 * 24)));
@@ -58,4 +62,5 @@ $(document).ready(function() {
 		}, 300);
 		return false;
 	});
+	$('.parallax').paroller();
 });
